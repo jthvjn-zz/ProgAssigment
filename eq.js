@@ -91,7 +91,7 @@ function processTree(node, tree_){
 		tree_ = new Node(l, r, sign);
 
 		processTree(node.lhs, tree_);
-	} else if(node.op && (node.lhs.x_present === false && typeof node.lhs == 'number')){
+	} else if(node.op && (node.lhs.x_present === false || typeof node.lhs == 'number')){
 		
 		sign = getSign(node.op, lhs = true);				
 		[l, r] = (node.op === 'divide') ? [node.lhs, tree_] : [tree_, node.lhs];
@@ -226,5 +226,4 @@ const r = fs.readFileSync(file);
 var tree = JSON.parse(r);
 solveQ1(tree);
 solveQ2Q3(tree);
-
 
