@@ -80,7 +80,7 @@ tree and parsed JSON.
 
 function processTree(node, tree_){
 	if(node === undefined || node == 'x'){
-		return;
+		return tree_;
 	}
 	
 	let r, l , sign;
@@ -90,16 +90,15 @@ function processTree(node, tree_){
 		l = tree_, r = node.rhs;
 		tree_ = new Node(l, r, sign);
 
-		processTree(node.lhs, tree_);
+		return processTree(node.lhs, tree_);
 	} else if(node.op && (node.lhs.x_present === false || typeof node.lhs == 'number')){
 		
 		sign = getSign(node.op, lhs = true);				
 		[l, r] = (node.op === 'divide') ? [node.lhs, tree_] : [tree_, node.lhs];
 		tree_ = new Node(l, r, sign);
 		
-		processTree(node.rhs, tree_);
+		return processTree(node.rhs, tree_);
 	}
-	return tree_;
 }
 
 /*
